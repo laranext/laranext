@@ -1,0 +1,47 @@
+//== Basic
+//
+//##
+body
+    @apply font-sans bg-gray-200 text-gray-900 antialiased
+
+[v-cloak]
+    display: none
+
+
+//== Header
+//
+//##
+.header
+    @apply bg-white shadow-md relative
+
+
+//== Sidebar
+//
+//##
+.sidebar
+    @apply bg-gray-800 w-64 fixed left-0 inset-y-0 z-50
+
+
+//== Main
+//
+//##
+.main
+    @apply pl-64
+
+.top-bar
+    @apply bg-white px-16 py-8
+
+
+//== Others
+//
+//##
+.__cov-progress:before
+    width: 100%
+    content: " "
+    background: black
+    height: 3px
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    opacity: .1

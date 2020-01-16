@@ -1,0 +1,25 @@
+.sidebar-menu
+    @apply pt-5 pb-12 overflow-auto
+    &::-webkit-scrollbar-thumb
+        background: #718096
+    &::-webkit-scrollbar
+        background: 0 0
+        width: 4px
+
+
+.sidebar-menu__item
+    @apply block text-white px-3 py-2 rounded
+    transition: transform .2s ease !important
+    &.active
+        @apply bg-gray-700 font-bold
+    &:hover:not(.active)
+        transform: translateX(2px) !important
+
+// Sidebar Sub Menu
+.sub-menu-item
+    @apply block py-2 px-4
+    transition: transform .2s ease !important
+    &.active
+        @apply bg-gray-300 font-bold
+    &:hover:not(.active)
+        transform: translateX(2px) !important

@@ -1,0 +1,161 @@
+button
+    &:focus
+        outline: 0
+
+.btn
+    @apply flex items-center px-4 h-9 font-semibold text-sm border border-transparent uppercase rounded tracking-wider
+
+.btn:focus
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, .5)
+    outline: 0
+
+.btn:disabled
+    opacity: .5
+
+.btn-sm
+    @apply px-3 text-xs
+    height: 1.875rem
+
+.btn-primary
+    @apply bg-primary text-white
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-primary:hover
+    @apply bg-primary-hover text-white shadow
+
+.btn-primary:hover:disabled
+    @apply bg-primary
+
+.btn-primary-outline,
+.btn-primary:hover:disabled
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-primary-outline
+    border-color: #cbd5e0
+    background-color: transparent
+    color: #718096
+
+.btn-primary-outline:hover
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)
+
+.btn-primary-outline:hover:disabled,
+.btn-gray
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+
+
+
+
+.btn-black
+    background-color: #2d3748
+    color: #fff
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-black:hover
+    background-color: #4a5568
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)
+
+.btn-black:hover:disabled
+    background-color: #2d3748
+
+.btn-black-outline,
+.btn-black:hover:disabled
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-black-outline
+    border-color: #cbd5e0
+    background-color: transparent
+    color: #718096
+
+.btn-black-outline:hover
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)
+
+.btn-black-outline:hover:disabled,
+.btn-gray
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-gray
+    background-color: #e2e8f0
+    color: #2d3748
+
+.btn-gray:hover
+    background-color: #cbd5e0
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)
+
+.btn-gray:hover:disabled
+    background-color: #e2e8f0
+
+.btn-gray:hover:disabled,
+.btn-white
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-white
+    background-color: #fff
+    border-color: #e2e8f0
+    color: #4a5568
+
+.btn-white:hover
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)
+
+.btn-danger,
+.btn-white:hover:disabled
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+.btn-danger
+    background-color: #f56565
+    color: #fff
+
+.btn-danger:hover
+    background-color: #e53e3e
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)
+
+.btn-danger:hover:disabled
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .btn
+//     @apply py-2 px-4 rounded uppercase border-transparent text-sm font-semibold tracking-widest h-9
+//     &:focus
+//         outline: none
+//     &:disabled,
+//     &[disabled]
+//         cursor: not-allowed
+//         opacity: .5
+
+// .btn-primary
+//     @apply bg-primary text-white shadow
+
+// .btn-primary:not([disabled]):not(.btn-disabled):hover
+//     @apply bg-primary-hover
+
+// .btn-danger
+//     @apply bg-red-600 text-white shadow
+
+// .btn-danger:not([disabled]):not(.btn-disabled):hover
+//     @apply bg-red-500
+
+// .btn-blue
+//     @apply bg-blue-500 text-white
+
+// .btn-blue:not([disabled]):not(.btn-disabled):hover
+//     @apply bg-blue-700
+
+// .btn-black
+//     @apply bg-gray-800 text-white shadow
+
+// .btn-black:not([disabled]):not(.btn-disabled):hover
+//     @apply bg-gray-700
