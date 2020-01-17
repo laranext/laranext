@@ -1,4 +1,4 @@
-@extends('laranext::layouts.master')
+@extends('theme::layouts.master')
 
 @section('main')
     <div class="flex px-12 py-8">
