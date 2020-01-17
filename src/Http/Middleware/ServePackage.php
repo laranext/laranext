@@ -63,8 +63,6 @@ class ServePackage
      */
     protected function isBackendRequest()
     {
-        Laranext::setPath($key = $this->key());
-
         return $this->getProvider($key, config('laranext.providers'));
     }
 
