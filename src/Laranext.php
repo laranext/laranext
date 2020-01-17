@@ -13,7 +13,7 @@ class Laranext
      */
     public static function version()
     {
-        return '0.0.1';
+        return '0.0.3';
     }
 
     /**

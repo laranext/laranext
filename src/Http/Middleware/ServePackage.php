@@ -63,7 +63,7 @@ class ServePackage
      */
     protected function isBackendRequest()
     {
-        return $this->getProvider($key, config('laranext.providers'));
+        return $this->getProvider($this->key(), config('laranext.providers'));
     }
 
     /**
