@@ -133,10 +133,15 @@ class ServePackage
      */
     protected function registerSiteProvider()
     {
+        // Laranext::theme('new');
         $provider = null;
 
         if ($this->request->segment(1)) {
             $provider = $this->getProvider($this->request->segment(1), config('laranext.site_providers'));
+
+            if (!$provider && $this->getProvider('', config('laranext.site_providers'))) {
+                $provider = $this->getProvider('', config('laranext.site_providers'));
+            }
         }
         else {
             $provider = $this->getProvider('', config('laranext.site_providers'));

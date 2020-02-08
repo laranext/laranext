@@ -28,7 +28,7 @@ class ThemeServiceProvider extends ServiceProvider
     protected function registerPublishing()
     {
         $this->publishes([
-            __DIR__.'/../resources/views/layouts' => resource_path('views/vendor/laranext/layouts'),
+            __DIR__.'/../resources/views/layouts' => resource_path('views/vendor/theme/layouts'),
         ], 'laranext-views');
 
         $this->publishes([

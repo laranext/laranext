@@ -13,8 +13,22 @@ class Laranext
      */
     public static function version()
     {
-        return '0.0.3';
+        return '0.0.5';
     }
+
+    /**
+     * Current Theme Layout.
+     *
+     * @var string
+     */
+    public static $theme = '';
+
+    /**
+     * Current Views Load Path.
+     *
+     * @var string
+     */
+    public static $view = '';
 
     /**
      * All of the registered Laranext tool CSS.
@@ -71,5 +85,33 @@ class Laranext
         }
 
         return static::$sidebar;
+    }
+
+    /**
+     * Set and get current theme on runtime.
+     *
+     * @return string
+     */
+    public static function theme($theme = null)
+    {
+        if ($theme) {
+            static::$theme = $theme;
+        }
+
+        return static::$theme;
+    }
+
+    /**
+     * Set and get current views on runtime.
+     *
+     * @return string
+     */
+    public static function view($view = null)
+    {
+        if ($view) {
+            static::$view = $view;
+        }
+
+        return static::$view;
     }
 }
