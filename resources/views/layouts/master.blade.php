@@ -14,18 +14,17 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ mix('root.css', 'vendor/laranext') }}" rel="stylesheet">
-    <link href="{{ mix('style.css', 'vendor/laranext') }}" rel="stylesheet">
+    <link href="{{ mix('css/style.css', 'vendor/laranext') }}" rel="stylesheet">
 
     @yield('styles')
 </head>
 
 <body>
     <div id="app">
-        @include(Laranext::sidebar())
+        @include('layouts.sidebar')
 
         <div class="pl-64">
-            @include(Laranext::header())
+            @include('layouts.header')
 
             <div class="bg-white px-12">
                 <div class="flex justify-between">
@@ -61,6 +60,8 @@
     <!-- Scripts -->
     <script>
         window.App = {
+            key: @json(Laranext::key()),
+            adminPrefix: @json(config('laranext.admin_prefix')),
             permissions: @json($permissions),
             isSuperAdmin: @json(auth()->id() == 1),
             language: @json(config('app.locale')),
@@ -68,7 +69,7 @@
         }
     </script>
 
-    <script src="{{ mix('app.js', 'vendor/laranext') }}"></script>
+    <script src="{{ mix('js/app.js', 'vendor/laranext') }}"></script>
 
     @yield('scripts')
 

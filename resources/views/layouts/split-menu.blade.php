@@ -1,4 +1,4 @@
-@extends('theme::layouts.master')
+@extends('layouts.master')
 
 @section('main')
     <div class="flex px-12 py-8">

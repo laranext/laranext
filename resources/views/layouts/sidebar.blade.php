@@ -15,10 +15,14 @@
                 Resources
             </h4>
 
+            @can('demo:view')
+                <div class="px-3 mt-2">
+                    <route-link href="demo">Demo</route-link>
+                </div>
+            @endcan
+
             <div class="px-3 mt-2">
-                <a href="/admin/blog/demo" class="sidebar-menu__item {{ isActive('demo', 3) }}">
-                    Demo
-                </a>
+                <route-link href="demo">Demo</route-link>
             </div>
         </div>
 
@@ -28,12 +32,7 @@
             </h4>
 
             <div class="px-3 mt-2">
-                <a href="/admin/users" class="sidebar-menu__item {{ isActive('users', 2) }}">
-                    Users
-                </a>
-                <a href="/admin/settings" class="sidebar-menu__item {{ isActive('settings', 2) }}">
-                    Settings
-                </a>
+                <route-link href="users">Users</route-link>
             </div>
         </div>
     </div>

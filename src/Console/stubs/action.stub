@@ -1,0 +1,44 @@
+<?php
+
+namespace {{ namespace }}\Actions;
+
+use Laranext\Actions\Action;
+
+class {{ class }} extends Action
+{
+    /**
+     * The displayable button of the action.
+     *
+     * @var string
+     */
+    public $button = 'Run';
+
+    /**
+     * The displayable danger of the action.
+     *
+     * @var string
+     */
+    public $danger = false;
+
+    /**
+     * Perform the action on the given models.
+     *
+     * @param  $items
+     * @param  $fields
+     * @return mixed
+     */
+    public function handle($items, $fields)
+    {
+        return Action::message('Action ran successfully!');
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return [];
+    }
+}

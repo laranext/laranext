@@ -1,0 +1,18 @@
+<?php
+
+namespace {{ namespace }}\Filters;
+
+use Laranext\Filters\Filters;
+
+class {{ class }}Filters extends Filters
+{
+    /**
+     * Get the filters available for the resource.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [];
+    }
+}

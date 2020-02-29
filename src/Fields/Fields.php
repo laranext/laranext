@@ -103,8 +103,6 @@ abstract class Fields implements JsonSerializable
             return $this->filter();
         }
 
-        return array_merge([
-            'fields' => $this->fields()
-        ], $this->meta());
+        return array_merge($this->fields(), $this->meta());
     }
 }

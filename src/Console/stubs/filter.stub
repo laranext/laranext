@@ -1,0 +1,54 @@
+<?php
+
+namespace {{ namespace }}\Filters;
+
+use Laranext\Filters\Filter;
+
+class {{ class }} extends Filter
+{
+    /**
+     * The filter's component.
+     *
+     * @var string
+     */
+    public $component = '{{ type }}-filter';
+
+    /**
+     * The attribute / column name of the field.
+     *
+     * @var string
+     */
+    public $attribute = '{{ attribute }}';
+
+    /**
+     * Set the default options for the filter.
+     *
+     * @return array|mixed
+     */
+    public function default()
+    {
+        return {{ default }};
+    }
+
+    /**
+     * Apply the filter to the given query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function apply($query, $value)
+    {
+        return $query;
+    }
+
+    /**
+     * Get the filter's available options.
+     *
+     * @return array
+     */
+    public function options()
+    {
+        return [];
+    }
+}

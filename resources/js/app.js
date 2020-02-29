@@ -1,13 +1,12 @@
 import Vue from 'vue'
+import axios from 'Util/axios'
+import i18n from '@/plugins/i18n'
 import VueProgressBar from 'vue-progressbar'
 import VueCompositionApi from '@vue/composition-api'
-import axios from '@/util/axios'
-import Pages from 'Theme/pages'
-import store from '@/store'
-import 'Theme/components/global'
 import '@/components'
+import 'Theme/index.js'
 
-import i18n from '@/plugins/i18n'
+window.axios = axios
 
 Vue.use(VueCompositionApi)
 
@@ -16,8 +15,6 @@ Vue.use(VueProgressBar, {
     color: '#4099de',
     failedColor: '#e74444'
 })
-
-window.axios = axios
 
 Vue.mixin({
     methods: {
@@ -37,19 +34,12 @@ Vue.mixin({
     }
 })
 
-const app = new Vue({
+export default new Vue({
     el: '#app',
-    store,
     i18n,
-
-    components: {
-        ...Pages
-    },
 
     setup() {
         i18n.locale = App.language
         i18n.setLocaleMessage(App.language, App.messages)
     }
 })
-
-export default app

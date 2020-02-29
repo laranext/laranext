@@ -1,0 +1,21 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+use {{ namespace }}\Filters\{{ name }}Filters;
+
+class {{ name }} extends Model
+{
+    /**
+     * Apply all relevant {{ kebab }} filters.
+     *
+     * @param  Builder       $query
+     * @param  {{ namespace }}\{{ name }}Filters $filters
+     * @return Builder
+     */
+    public function scopeFilter($query, {{ name }}Filters $filters)
+    {
+        return $filters->apply($query);
+    }
+}

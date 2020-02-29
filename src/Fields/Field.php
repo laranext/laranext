@@ -20,7 +20,7 @@ abstract class Field implements JsonSerializable
      *
      * @var string
      */
-    public $field = 'inline-field';
+    public $baseField = 'default-field';
 
     /**
      * The displayable name of the field.
@@ -209,9 +209,9 @@ abstract class Field implements JsonSerializable
      *
      * @return $this
      */
-    public function grid()
+    public function inline()
     {
-        $this->field = 'grid-field';
+        $this->baseField = 'inline-field';
 
         return $this;
     }
@@ -284,7 +284,7 @@ abstract class Field implements JsonSerializable
     {
         return array_merge([
             'component' => $this->component,
-            'field' => $this->field,
+            'baseField' => $this->baseField,
             'name' => $this->name,
             'attribute' => $this->attribute,
             'required' => $this->required,

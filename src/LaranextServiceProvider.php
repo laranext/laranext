@@ -40,6 +40,10 @@ class LaranextServiceProvider extends ServiceProvider
         ], 'laranext-migrations');
 
         $this->publishes([
+            __DIR__.'/../resources/views/layouts' => resource_path('views/layouts'),
+        ], 'laranext-views');
+
+        $this->publishes([
             __DIR__.'/../resources/views/auth' => resource_path('views/auth'),
         ], 'laranext-auth-views');
 
@@ -48,18 +52,13 @@ class LaranextServiceProvider extends ServiceProvider
         ], 'laranext-lang');
 
         $this->publishes([
-            __DIR__.'/../.gitignore' => base_path('laranext/.gitignore'),
-            __DIR__.'/../resources/sass/style.stub.sass' => base_path('laranext/resources/sass/style.sass'),
-            __DIR__.'/../resources/sass/_core.sass' => base_path('laranext/resources/sass/_core.sass'),
-            __DIR__.'/../resources/sass/_custom.sass' => base_path('laranext/resources/sass/_custom.sass'),
-            __DIR__.'/../resources/css' => base_path('laranext/resources/css'),
-            __DIR__.'/../resources/js' => base_path('laranext/resources/js'),
-            __DIR__.'/../webpack.mix.stub.js' => base_path('laranext/webpack.mix.js'),
-            __DIR__.'/../package.json' => base_path('laranext/package.json'),
-            __DIR__.'/../tailwind.config.js' => base_path('laranext/tailwind.config.js'),
-            __DIR__.'/../defaultConfig.stub.js' => base_path('laranext/defaultConfig.stub.js'),
             __DIR__.'/../.babelrc' => base_path('laranext/.babelrc'),
-            __DIR__.'/../version.txt' => base_path('laranext/version.txt'),
+            __DIR__.'/../.gitignore' => base_path('laranext/.gitignore'),
+            __DIR__.'/../tailwind.config.js' => base_path('laranext/tailwind.config.js'),
+            __DIR__.'/../package.json' => base_path('laranext/package.json'),
+            __DIR__.'/../webpack.mix.stub.js' => base_path('laranext/webpack.mix.js'),
+            __DIR__.'/../resources/sass' => base_path('laranext/resources/sass'),
+            __DIR__.'/../resources/js' => base_path('laranext/resources/js'),
         ], 'laranext-custom');
     }
 
@@ -75,6 +74,20 @@ class LaranextServiceProvider extends ServiceProvider
             Console\InstallCommand::class,
             Console\PublishCommand::class,
             Console\VersionCommand::class,
+
+            Console\ActionCommand::class,
+            Console\ActionsCommand::class,
+            Console\ControllerCommand::class,
+            Console\FieldsCommand::class,
+            Console\FilterCommand::class,
+            Console\FiltersCommand::class,
+            Console\MigrationCommand::class,
+            Console\ModelCommand::class,
+            Console\PackageCommand::class,
+            Console\RequestCommand::class,
+            Console\ResourceCollectionCommand::class,
+            Console\ResourceCommand::class,
+            Console\ViewsCommand::class,
         ]);
     }
 }

@@ -14,8 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ mix('root.css', 'vendor/laranext') }}" rel="stylesheet">
-    <link href="{{ mix('style.css', 'vendor/laranext') }}" rel="stylesheet">
+    <link href="{{ mix('css/style.css', 'vendor/laranext') }}" rel="stylesheet">
 </head>
 
 <body>

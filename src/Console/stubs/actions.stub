@@ -1,0 +1,18 @@
+<?php
+
+namespace {{ namespace }}\Actions;
+
+use Laranext\Actions\Actions;
+
+class {{ class }}Actions extends Actions
+{
+    /**
+     * Get the actions available for the resource.
+     *
+     * @return array
+     */
+    public function actions()
+    {
+        return [];
+    }
+}

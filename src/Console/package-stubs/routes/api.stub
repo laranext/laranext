@@ -1,0 +1,8 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::get('{resource}/actions', 'ActionsController@index');
+Route::post('{resource}/action', 'ActionsController@store');
+Route::get('{resource}/filters', 'FiltersController@index');
+

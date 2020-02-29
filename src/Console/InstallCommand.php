@@ -32,9 +32,7 @@ class InstallCommand extends Command
     {
         $this->comment('Publishing Laranext Assets / Resources...');
 
-        $this->callSilent('laranext:publish', [
-            '--force' => true,
-        ]);
+        $this->callSilent('laranext:publish');
 
         $this->info('Laranext scaffolding installed successfully.');
     }

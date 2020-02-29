@@ -1,0 +1,52 @@
+<?php
+
+namespace {{ namespace }}\Http\Controllers;
+
+use {{ namespace }}\{{ modelClass }};
+use App\Http\Controllers\Controller;
+
+class {{ plural }}Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return View
+     */
+    public function index()
+    {
+        return view('{{ kebabPlural }}.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return View
+     */
+    public function create({{ modelClass }} ${{ modelVariable }})
+    {
+        return view('{{ kebabPlural }}.form', compact('{{ modelVariable }}'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return View
+     */
+    public function show({{ modelClass }} ${{ modelVariable }})
+    {
+        return view('{{ kebabPlural }}.detail', compact('{{ modelVariable }}'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return View
+     */
+    public function edit({{ modelClass }} ${{ modelVariable }})
+    {
+        return view('{{ kebabPlural }}.form', compact('{{ modelVariable }}'));
+    }
+}

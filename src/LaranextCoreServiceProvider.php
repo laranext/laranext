@@ -2,6 +2,7 @@
 
 namespace Laranext;
 
+use Laranext\Laranext;
 use Illuminate\Support\ServiceProvider;
 use Laranext\Http\Middleware\ServePackage;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
@@ -19,11 +20,8 @@ class LaranextCoreServiceProvider extends ServiceProvider
             $this->mergeConfigFrom(__DIR__.'/../config/laranext.php', 'laranext');
         }
 
-        if ($this->app->runningInConsole()) {
+        if (Laranext::runningInConsole()) {
             $this->app->register(LaranextServiceProvider::class);
-
-            $this->app->register(config('laranext.theme_provider'));
-            $this->app->register(config('laranext.site_theme_provider'));
 
             foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
                 if (is_string($provider)) {

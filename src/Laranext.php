@@ -8,27 +8,36 @@ class Laranext
 {
     /**
      * Get the current Laranext version.
-     *
-     * @return string
      */
     public static function version()
     {
-        return '0.0.5';
+        return '0.1.0';
     }
 
     /**
+     * Indicates if the application is running in the console.
+     */
+    protected static $isRunningInConsole;
+
+    /**
      * Current Theme Layout.
-     *
-     * @var string
      */
     public static $theme = '';
 
     /**
      * Current Views Load Path.
-     *
-     * @var string
      */
     public static $view = '';
+
+    /**
+     * Current Package Prefix.
+     */
+    public static $prefix = '';
+
+    /**
+     * Current Package Key.
+     */
+    public static $key = '';
 
     /**
      * All of the registered Laranext tool CSS.
@@ -57,6 +66,41 @@ class Laranext
         }
 
         return Str::title(Str::snake($value, ' '));
+    }
+
+    /**
+     * Determine if the application is running in the console.
+     *
+     * @return bool
+     */
+    public static function registerAllProviders()
+    {
+        static::$isRunningInConsole = true;
+
+        app()->register(LaranextServiceProvider::class);
+
+        foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
+            if (is_string($provider)) {
+                app()->register($provider);
+            }
+            else {
+                app()->register($provider['provider']);
+            }
+        }
+    }
+
+    /**
+     * Determine if the application is running in the console.
+     *
+     * @return bool
+     */
+    public static function runningInConsole($force = null)
+    {
+        if ( static::$isRunningInConsole === null) {
+            static::$isRunningInConsole = $force ?? (\PHP_SAPI === 'cli' || \PHP_SAPI === 'phpdbg');
+        }
+
+        return static::$isRunningInConsole;
     }
 
     /**
@@ -94,6 +138,8 @@ class Laranext
      */
     public static function theme($theme = null)
     {
+        return base_path('vendor/laranext/laranext/resources/views/');
+
         if ($theme) {
             static::$theme = $theme;
         }
@@ -113,5 +159,29 @@ class Laranext
         }
 
         return static::$view;
+    }
+
+    /**
+     * Set and get current prefix on runtime.
+     *
+     * @return string
+     */
+    public static function prefix($prefix = null)
+    {
+        if ($prefix) {
+            static::$prefix = $prefix;
+        }
+
+        return static::$prefix;
+    }
+
+    /**
+     * Set and get current key on runtime.
+     *
+     * @return string
+     */
+    public static function key($key = null)
+    {
+        return $key ? static::$key = $key : static::$key;
     }
 }

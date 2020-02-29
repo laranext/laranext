@@ -1,0 +1,102 @@
+<?php
+
+namespace {{ namespace }}\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use Laranext\IndexCollection;
+use {{ namespace }}\{{ modelClass }};
+use App\Http\Controllers\Controller;
+use {{ namespace }}\Filters\{{ name }}Filters;
+use {{ namespace }}\Fields\{{ modelClass }}Fields;
+use {{ namespace }}\Requests\{{ modelClass }}Request;
+
+class {{ plural }}Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \{{ namespace }}\Filters\{{ name }}Filters  $filters
+     * @return \Illuminate\Http\Response
+     */
+    public function index({{ name }}Filters $filters)
+    {
+        return new IndexCollection(
+            {{ modelClass }}::filter($filters)->simplePaginate(),
+            {{ modelClass }}Fields::class
+        );
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function create({{ modelClass }} ${{ modelVariable }})
+    {
+        return new {{ modelClass }}Fields(${{ modelVariable }});
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, {{ modelClass }} ${{ modelVariable }})
+    {
+        return new {{ modelClass }}Request($request, ${{ modelVariable }});
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function show({{ modelClass }} ${{ modelVariable }})
+    {
+        return ${{ modelVariable }};
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function edit({{ modelClass }} ${{ modelVariable }})
+    {
+        return new {{ modelClass }}Fields(${{ modelVariable }});
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, {{ modelClass }} ${{ modelVariable }})
+    {
+        return new {{ modelClass }}Request($request, ${{ modelVariable }});
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        {{ modelClass }}::destroy($request->items);
+
+        return [
+            'message' => count($request->items) > 1
+                ? '{{ modelClass }}s Deleted Successfully!'
+                : '{{ modelClass }} Deleted Successfully!'
+        ];
+    }
+}
