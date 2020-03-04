@@ -38,11 +38,17 @@ class UpdateEnvConfig
      */
     public function handle()
     {
-        foreach ($this->configs as $key => $value) {
-            $search = $this->getValue($key, option($value));
-            $replace = $this->getValue($key, $this->request->{$value});
+        foreach ($this->configs as $config => $value) {
+            $path = base_path('.env');
 
-            $this->updateEnv($search, $replace);
+            file_put_contents(
+                $path,
+                preg_replace(
+                    '/' . $config . '=.*/',
+                    $config . '=' . $this->prepareValue($this->request->$value),
+                    file_get_contents($path)
+                )
+            );
         }
     }
 
@@ -51,27 +57,12 @@ class UpdateEnvConfig
      *
      * @return void
      */
-    public function updateEnv($search, $replace)
-    {
-        $path = base_path('.env');
-
-        file_put_contents(
-            $path,
-            str_replace($search, $replace, file_get_contents($path))
-        );
-    }
-
-    /**
-     * Handle Env Config.
-     *
-     * @return void
-     */
-    public function getValue($key, $value)
+    public function prepareValue($value)
     {
         if (Str::contains($value, ' ')) {
-            return $key . "='" . $value . "'";
+            return "'${value}'";
         }
 
-        return $key . '=' . $value;
+        return $value;
     }
 }
