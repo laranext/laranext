@@ -27,7 +27,7 @@ class Laranext
     /**
      * Current Views Load Path.
      */
-    public static $view = '';
+    public static $views = '';
 
     /**
      * Current Package Prefix.
@@ -152,13 +152,13 @@ class Laranext
      *
      * @return string
      */
-    public static function view($view = null)
+    public static function views($views = null)
     {
-        if ($view) {
-            static::$view = $view;
+        if ($views) {
+            static::$views = base_path('packages/' . $views . '/resources/views');
         }
 
-        return static::$view;
+        return static::$views;
     }
 
     /**

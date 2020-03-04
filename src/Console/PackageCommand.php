@@ -151,7 +151,7 @@ class PackageCommand extends Command
      */
     protected function composerUpdate()
     {
-        $this->executeCommand('composer update', getcwd());
+        $this->executeCommand(['composer', 'update']);
     }
 
     /**
@@ -171,16 +171,14 @@ class PackageCommand extends Command
      * @param  string  $path
      * @return void
      */
-    protected function executeCommand($command, $path)
+    protected function executeCommand($command)
     {
-        $process = (new Process($command, $path))->setTimeout(null);
+        $process = (new Process($command))->setTimeout(null);
 
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            $process->setTty(true);
-        }
+        // $process->setTty(Process::isTtySupported());
 
-        $process->run(function ($type, $line) {
-            $this->output->write($line);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
         });
     }
 }

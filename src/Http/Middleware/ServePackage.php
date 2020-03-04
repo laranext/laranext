@@ -52,7 +52,7 @@ class ServePackage
             return $siteProvider;
         }
 
-        return $provider;
+        return config('laranext.admin_prefix') ? false : $provider;
     }
 
     /**
@@ -67,10 +67,22 @@ class ServePackage
         if (array_key_exists($key, $array)) {
             Laranext::key($key);
 
-            return is_string($array[$key]) ? $array[$key] : $array[$key]['provider'];
+            if (is_string($array[$key])) {
+                return $array[$key];
+            }
+
+            Laranext::views($array[$key]['views']);
+
+            return $array[$key]['provider'];
         }
         elseif (array_key_exists('', $array)) {
-            return is_string($array['']) ? $array[''] : $array['']['provider'];
+            if (is_string($array[''])) {
+                return $array[''];
+            }
+
+            Laranext::views($array['']['views']);
+
+            return $array['']['provider'];
         }
     }
 }
