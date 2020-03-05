@@ -12,7 +12,6 @@
 <script>
     import { useFormStore } from 'Store/form'
     import flatPickr from 'vue-flatpickr-component'
-    import 'flatpickr/dist/flatpickr.css'
 
     export default {
         components: {

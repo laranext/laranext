@@ -16,26 +16,31 @@
     <!-- Styles -->
     <link href="{{ mix('css/style.css', 'vendor/laranext') }}" rel="stylesheet">
 
-    @yield('styles')
+    @stack('styles')
 </head>
 
-<body>
-    <div id="app">
-        @include('layouts.sidebar')
+<body class="font-sans bg-gray-200 text-gray-900 antialiased">
+    @hasSection('sidebar')
+        <div id="app" class="sidebar">
+    @else
+        <div id="app">
+    @endif
 
-        <div class="pl-64">
-            @include('layouts.header')
+        @yield('sidebar')
 
-            <div class="bg-white px-12">
-                <div class="flex justify-between">
-                    @yield('topbar')
-                </div>
-            </div>
+        @include('layouts.header')
 
-            <main class="pb-12">
+        <main class="main pt-16">
+            @yield('topbar-wrap')
+
+            @hasSection('main')
                 @yield('main')
-            </main>
-        </div>
+            @else
+                <div class="px-12 py-8">
+                    @yield('content')
+                </div>
+            @endif
+        </main>
 
         <vue-progress-bar></vue-progress-bar>
 
@@ -45,20 +50,27 @@
     </div>
 
 
-<?php
-    $permissions = Cache::rememberForever('user:' . auth()->id() . ':app-permissions', function () {
-        $role = optional(auth()->user()->roles)->first();
+    @php
+        $permissions = Cache::rememberForever('user:' . auth()->id() . ':app-permissions', function () {
+            $role = optional(auth()->user()->roles)->first();
 
-        if (!$role) {
-            return [];
-        }
+            if (!$role) {
+                return [];
+            }
 
-        return $role->permissions->pluck('name');
-    });
-?>
+            return $role->permissions->pluck('name');
+        });
+    @endphp
 
     <!-- Scripts -->
     <script>
+        (function() {
+            let sidebar = document.querySelector('.sidebar-menu')
+
+            if (sidebar)
+                sidebar.style.maxHeight = (document.documentElement.clientHeight - 48) + 'px'
+        })()
+
         window.App = {
             key: @json(Laranext::key()),
             adminPrefix: @json(config('laranext.admin_prefix')),
@@ -71,15 +83,6 @@
 
     <script src="{{ mix('js/app.js', 'vendor/laranext') }}"></script>
 
-    @yield('scripts')
-
-    <!-- Custom Script -->
-    <script>
-        (function() {
-            let sidebar = document.querySelector('.sidebar-menu')
-
-            sidebar.style.maxHeight = (document.documentElement.clientHeight - 48) + 'px'
-        })()
-    </script>
+    @stack('scripts')
 </body>
 </html>

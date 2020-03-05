@@ -14,7 +14,6 @@
 </template>
 
 <script>
-    import 'flatpickr/dist/flatpickr.css'
     import flatPickr from 'vue-flatpickr-component'
 
     export default {

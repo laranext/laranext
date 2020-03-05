@@ -1,11 +1,15 @@
 <aside class="sidebar">
-    <a href="/admin" class="flex items-center justify-center h-16 px-4 bg-gray-900 text-xl text-white font-medium">
-        {{ config('app.name') }}
+    <a href="/app" class="flex items-center h-16 px-4 bg-gray-900">
+        <img class="h-8 w-8" src="/img/logos/workflow-mark-on-dark.svg" alt="">
+
+        <span class="text-xl text-white font-semibold pl-4">
+            {{ config('app.name') }}
+        </span>
     </a>
 
     <div class="sidebar-menu">
         <div class="px-3 pb-6">
-            <a href="/admin" class="sidebar-menu__item {{ isActive(null, 2) }}">
+            <a href="/app" class="sidebar-menu__item {{ isActive(null, 2) }}">
                 Dashboard
             </a>
         </div>

@@ -22,7 +22,17 @@ export const useFormStore = function (name) {
 
         actions: {
             init({id, route}) {
-                const uri = App.key ? `${App.key}/${route}` : route
+                let uri = ''
+
+                if (App.key && route) {
+                    uri = `${App.key}/${route}`
+                }
+                else if (App.key) {
+                    uri = App.key
+                }
+                else if (route) {
+                    uri = route
+                }
 
                 if (id) {
                     this.patch({
@@ -51,12 +61,15 @@ export const useFormStore = function (name) {
                     uri = '/',
                     route = segment.split('?')[0]
 
-                if (prefix && key)
-                    uri += prefix + '/' + key + '/' + route
-                else if (prefix)
-                    uri += prefix + '/' + route
-                else
-                    uri += key + '/' + route
+                if (prefix && key) {
+                    uri += route ? prefix + '/' + key + '/' + route : prefix + '/' + key
+                }
+                else if (prefix) {
+                    uri += route ? prefix + '/' + route : prefix
+                }
+                else {
+                    uri += route ? key + '/' + route : key
+                }
 
                 return uri
             },

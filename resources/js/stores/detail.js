@@ -11,8 +11,21 @@ export const useDetailStore = createStore({
     actions: {
         setConfig({id, uri}) {
             this.state.id = id
-            this.state.uri = App.key ? App.key + '/' + uri : uri
+            this.state.uri = this.setUri(uri)
             this.state.baseUri = this.baseUri(uri)
+        },
+
+        setUri(uri) {
+            App.key ? App.key + '/' + uri : uri
+            if (App.key && uri) {
+                return App.key + '/' + uri
+            }
+            else if (App.key) {
+                return App.key
+            }
+            else {
+                return uri
+            }
         },
 
         baseUri(segment) {
@@ -21,12 +34,15 @@ export const useDetailStore = createStore({
                 uri = '/',
                 route = segment.split('?')[0]
 
-            if (prefix && key)
-                uri += prefix + '/' + key + '/' + route
-            else if (prefix)
-                uri += prefix + '/' + route
-            else
-                uri += key + '/' + route
+            if (prefix && key) {
+                uri += route ? prefix + '/' + key + '/' + route : prefix + '/' + key
+            }
+            else if (prefix) {
+                uri += route ? prefix + '/' + route : prefix
+            }
+            else {
+                uri += route ? key + '/' + route : key
+            }
 
             return uri
         },

@@ -33,8 +33,20 @@ export const useIndexStore = function (name) {
         actions: {
             setConfig(config) {
                 this.state.config = config
-                this.state.config.uri = App.key + '/' + config.route
+                this.state.config.uri = this.setUri(config.route)
                 this.state.config.baseUri = this.baseUri(config.route)
+            },
+
+            setUri(route) {
+                if (App.key && route) {
+                    return App.key + '/' + route
+                }
+                else if (App.key) {
+                    return App.key
+                }
+                else {
+                    return route
+                }
             },
 
             baseUri(segment) {
@@ -43,12 +55,15 @@ export const useIndexStore = function (name) {
                     uri = '/',
                     route = segment.split('?')[0]
 
-                if (prefix && key)
-                    uri += prefix + '/' + key + '/' + route
-                else if (prefix)
-                    uri += prefix + '/' + route
-                else
-                    uri += key + '/' + route
+                if (prefix && key) {
+                    uri += route ? prefix + '/' + key + '/' + route : prefix + '/' + key
+                }
+                else if (prefix) {
+                    uri += route ? prefix + '/' + route : prefix
+                }
+                else {
+                    uri += route ? key + '/' + route : key
+                }
 
                 return uri
             },

@@ -17,7 +17,7 @@
     <link href="{{ mix('css/style.css', 'vendor/laranext') }}" rel="stylesheet">
 </head>
 
-<body>
+<body class="font-sans bg-gray-200 text-gray-900 antialiased">
     <div id="app" class="min-h-screen flex flex-col items-center pt-24 pb-12">
         <div class="text-2xl font-semibold">
             {{ config('app.name') }}
