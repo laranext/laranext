@@ -2,6 +2,7 @@
 
 namespace Laranext;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class LaranextServiceProvider extends ServiceProvider
@@ -11,9 +12,21 @@ class LaranextServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Request $request)
     {
+        $this->registerMigrations();
+
         $this->registerPublishing();
+    }
+
+    /**
+     * Register the package migrations.
+     *
+     * @return void
+     */
+    protected function registerMigrations()
+    {
+        $this->loadMigrationsFrom(base_path('laranext/database/migrations'));
     }
 
     /**

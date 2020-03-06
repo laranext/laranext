@@ -3,9 +3,12 @@
 namespace Laranext;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 
 class Laranext
 {
+    use Concerns\Theme;
+
     /**
      * Get the current Laranext version.
      */
@@ -18,11 +21,6 @@ class Laranext
      * Indicates if the application is running in the console.
      */
     protected static $isRunningInConsole;
-
-    /**
-     * Current Theme Layout.
-     */
-    public static $theme = '';
 
     /**
      * Current Views Load Path.
@@ -38,20 +36,6 @@ class Laranext
      * Current Package Key.
      */
     public static $key = '';
-
-    /**
-     * All of the registered Laranext tool CSS.
-     *
-     * @var array
-     */
-    public static $header = 'theme::layouts.header';
-
-    /**
-     * All of the registered Laranext tool CSS.
-     *
-     * @var array
-     */
-    public static $sidebar = 'theme::layouts.sidebar';
 
     /**
      * Humanize the given value into a proper name.
@@ -90,6 +74,44 @@ class Laranext
     }
 
     /**
+     * Set and get current key on runtime.
+     *
+     * @return string
+     */
+    public static function dummySeeder()
+    {
+        foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
+            $namespace = Str::of($provider['provider'] ?? $provider)->beforeLast('\\');
+            $seeder = $namespace . '\\Seeds\Dummy\DummySeeder';
+
+            if (class_exists($seeder)) {
+                (new $seeder)->run();
+            }
+
+            Artisan::call('cache:clear');
+        }
+    }
+
+    /**
+     * Set and get current key on runtime.
+     *
+     * @return string
+     */
+    public static function requireSeeder()
+    {
+        foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
+            $namespace = Str::of($provider['provider'] ?? $provider)->beforeLast('\\');
+            $seeder = $namespace . '\\Seeds\Required\RequireSeeder';
+
+            if (class_exists($seeder)) {
+                (new $seeder)->run();
+            }
+
+            Artisan::call('cache:clear');
+        }
+    }
+
+    /**
      * Determine if the application is running in the console.
      *
      * @return bool
@@ -104,50 +126,6 @@ class Laranext
     }
 
     /**
-     * Get the JSON variables that should be provided to the global Laranext JavaScript object.
-     *
-     * @return array
-     */
-    public static function header($path = null)
-    {
-        if ($path) {
-            static::$header = $path . '::layouts.header';
-        }
-
-        return static::$header;
-    }
-
-    /**
-     * Get the JSON variables that should be provided to the global Laranext JavaScript object.
-     *
-     * @return array
-     */
-    public static function sidebar($path = null)
-    {
-        if ($path) {
-            static::$sidebar = $path . '::layouts.sidebar';
-        }
-
-        return static::$sidebar;
-    }
-
-    /**
-     * Set and get current theme on runtime.
-     *
-     * @return string
-     */
-    public static function theme($theme = null)
-    {
-        return base_path('vendor/laranext/laranext/resources/views/');
-
-        if ($theme) {
-            static::$theme = $theme;
-        }
-
-        return static::$theme;
-    }
-
-    /**
      * Set and get current views on runtime.
      *
      * @return string
@@ -158,7 +136,10 @@ class Laranext
             static::$views = base_path('packages/' . $views . '/resources/views');
         }
 
-        return static::$views;
+        return [
+            __DIR__.'/../resources/views/',
+            static::theme()
+        ];
     }
 
     /**

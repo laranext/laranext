@@ -64,6 +64,9 @@ class ServePackage
      */
     protected function getProvider($key, $array)
     {
+        config('laranext.theme') != 'default' ? Laranext::theme(config('laranext.theme')) : '';
+        config('laranext.site_theme') != 'default' ? Laranext::siteTheme(config('laranext.site_theme')) : '';
+
         if (array_key_exists($key, $array)) {
             Laranext::key($key);
 
@@ -71,7 +74,13 @@ class ServePackage
                 return $array[$key];
             }
 
-            Laranext::views($array[$key]['views']);
+            if ($array[$key]['theme'] ?? null) {
+                Laranext::theme($array[$key]['theme'] ?? null);
+                Laranext::siteTheme($array[$key]['theme'] ?? null);
+            }
+
+            Laranext::header($array[$key]['header'] ?? null);
+            Laranext::sidebar($array[$key]['sidebar'] ?? null);
 
             return $array[$key]['provider'];
         }
@@ -80,7 +89,13 @@ class ServePackage
                 return $array[''];
             }
 
-            Laranext::views($array['']['views']);
+            if ($array['']['theme'] ?? null) {
+                Laranext::theme($array['']['theme'] ?? null);
+                Laranext::siteTheme($array['']['theme'] ?? null);
+            }
+
+            Laranext::header($array['']['header'] ?? null);
+            Laranext::sidebar($array['']['sidebar'] ?? null);
 
             return $array['']['provider'];
         }
