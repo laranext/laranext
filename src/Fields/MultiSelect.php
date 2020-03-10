@@ -9,31 +9,33 @@ class MultiSelect extends Field
      *
      * @var string
      */
-    public $component = 'multi-select-field';
+    public $component = 'select-multi-field';
 
     /**
-     * Create a new field.
-     *
-     * @param  string  $name
-     * @param  string|callable|null  $attribute
-     * @return void
-     */
-    public function __construct($name = null, $attribute = null)
-    {
-        parent::__construct($name, $attribute);
-
-        $this->meta = ['type' => 'array'];
-    }
-
-    /**
-     * Set Field Live URI.
+     * Live search options.
      *
      * @param  string  $uri
      * @return $this
      */
-    public function uri($uri)
+    public function searchable($uri, $column = 'name')
     {
-        $this->meta = array_merge($this->meta, compact('uri'));
+        $this->withMeta([
+            'uri' => $uri . '?column=' . $column
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Select Filterable.
+     *
+     * @return $this
+     */
+    public function filterable()
+    {
+        $this->withMeta([
+            'filterable' => true
+        ]);
 
         return $this;
     }
@@ -45,7 +47,27 @@ class MultiSelect extends Field
      */
     public function acceptNewValue()
     {
-        $this->meta = array_merge($this->meta, ['accept-new-value' => true]);
+        $this->withMeta([
+            'acceptNewValue' => true
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Set Field Value.
+     *
+     * @param  bool  $value
+     * @return $this
+     */
+    public function value($value, $default = [])
+    {
+        if (is_array($value)) {
+            $this->value = empty($value) ? $default : $value;
+        }
+        else {
+            $this->value = $default;
+        }
 
         return $this;
     }

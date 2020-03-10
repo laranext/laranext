@@ -19,7 +19,7 @@ class Text extends Field
      */
     public function type($type)
     {
-        $this->meta = ['type' => $type];
+        $this->withMeta(compact('type'));
 
         return $this;
     }

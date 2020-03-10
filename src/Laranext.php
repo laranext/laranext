@@ -101,7 +101,7 @@ class Laranext
     {
         foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
             $namespace = Str::of($provider['provider'] ?? $provider)->beforeLast('\\');
-            $seeder = $namespace . '\\Seeds\Required\RequireSeeder';
+            $seeder = $namespace . '\\Seeds\RequireSeeder';
 
             if (class_exists($seeder)) {
                 (new $seeder)->run();

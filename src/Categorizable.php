@@ -44,6 +44,17 @@ trait Categorizable
     }
 
     /**
+     * Get options.
+     *
+     * @param  Builder       $query
+     * @return Builder
+     */
+    public function scopeOptions($query)
+    {
+        return $query->get(['id', 'name']);
+    }
+
+    /**
      * Scope a query to only include specified parent categories.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

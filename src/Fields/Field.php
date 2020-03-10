@@ -4,10 +4,13 @@ namespace Laranext\Fields;
 
 use Closure;
 use JsonSerializable;
+use Laranext\Metable;
 use Illuminate\Support\Str;
 
 abstract class Field implements JsonSerializable
 {
+    use Metable;
+
     /**
      * The element's component.
      *
@@ -91,13 +94,6 @@ abstract class Field implements JsonSerializable
      * @var string
      */
     public $align = 'left';
-
-    /**
-     * The meta data for the element.
-     *
-     * @var array
-     */
-    public $meta = [];
 
     /**
      * Create a new field.
@@ -238,29 +234,6 @@ abstract class Field implements JsonSerializable
     public function align($alignment)
     {
         $this->align = $alignment;
-
-        return $this;
-    }
-
-    /**
-     * Get additional meta information to merge with the element payload.
-     *
-     * @return array
-     */
-    public function meta()
-    {
-        return $this->meta;
-    }
-
-    /**
-     * Set additional meta information for the element.
-     *
-     * @param  array  $meta
-     * @return $this
-     */
-    public function withMeta(array $meta)
-    {
-        $this->meta = array_merge($this->meta, $meta);
 
         return $this;
     }
