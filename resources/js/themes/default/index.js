@@ -20,6 +20,7 @@ Vue.component('IndexDeleteRow', () => import(/* webpackChunkName: "index" */ './
 Vue.component('IndexDeleteRows', () => import(/* webpackChunkName: "index" */ './index/IndexDeleteRows'))
 Vue.component('IndexTextField', () => import(/* webpackChunkName: "index" */ './index/IndexTextField'))
 Vue.component('IndexLinkField', () => import(/* webpackChunkName: "index" */ './index/IndexLinkField'))
+Vue.component('IndexLabelField', () => import(/* webpackChunkName: "index" */ './index/IndexLabelField'))
 Vue.component('IndexActions', () => import(/* webpackChunkName: "index" */ './index/IndexActions'))
 Vue.component('IndexFilters', () => import(/* webpackChunkName: "index" */ './index/IndexFilters'))
 
@@ -47,6 +48,7 @@ Vue.component('BooleanField', () => import(/* webpackChunkName: "field" */ './fi
 Vue.component('TextareaField', () => import(/* webpackChunkName: "field" */ './fields/TextareaField'))
 Vue.component('DateField', () => import(/* webpackChunkName: "field" */ './fields/DateField'))
 Vue.component('ConditionalField', () => import(/* webpackChunkName: "field" */ './fields/ConditionalField'))
+Vue.component('ImageField', () => import(/* webpackChunkName: "field" */ './fields/ImageField'))
 Vue.component('PostField', () => import(/* webpackChunkName: "field" */ './fields/PostField'))
 
 Vue.component('VModal', () => import(/* webpackChunkName: "modal" */ './VModal'))

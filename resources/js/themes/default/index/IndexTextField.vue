@@ -1,5 +1,5 @@
 <template>
-    <p :class="{ 'text-center': data.align == 'center' }">
+    <p class="whitespace-no-wrap" :class="{ 'text-center': data.align == 'center' }">
         {{ data.value }}
     </p>
 </template>
