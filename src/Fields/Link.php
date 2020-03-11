@@ -19,7 +19,7 @@ class Link extends Field
      */
     public function url($url)
     {
-        $this->meta = ['url' => $url];
+        $this->withMeta(compact('url'));
 
         return $this;
     }

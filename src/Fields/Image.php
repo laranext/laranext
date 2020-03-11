@@ -19,7 +19,7 @@ class Image extends Field
      */
     public function uri($uri)
     {
-        $this->meta = ['uri' => $uri];
+        $this->withMeta(compact('uri'));
 
         return $this;
     }
