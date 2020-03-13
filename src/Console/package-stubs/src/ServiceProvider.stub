@@ -53,7 +53,7 @@ class {{ class }}ServiceProvider extends ServiceProvider
 
         $this->app->config->set(['view.paths' => [
             __DIR__.'/../resources/views/',
-            resource_path('views'),
+            Laranext::theme()
         ]]);
     }
 

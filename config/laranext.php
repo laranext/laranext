@@ -11,8 +11,6 @@ return [
 
     'theme' => 'default',
 
-    'theme_provider' => Laranext\ThemeServiceProvider::class,
-
     /*
     |--------------------------------------------------------------------------
     | Front Site Theme
@@ -20,9 +18,7 @@ return [
     |
     */
 
-    'site_theme' => 'name',
-
-    'site_theme_provider' => Laranext\DummyThemeServiceProvider::class,
+    'site_theme' => 'default',
 
     /*
     |--------------------------------------------------------------------------
