@@ -76,16 +76,7 @@ abstract class FormRequest implements JsonSerializable
      */
     public function prepareAttributes()
     {
-        $data = [];
-
-        foreach ($this->attributes as $key => $value) {
-            $newKey = isset($this->customAttributes()[$key]) ? $this->customAttributes()[$key] : $key;
-            $data[$newKey] = $value;
-        }
-
-        unset($data['id']);
-
-        $this->attributes = $data;
+        //
     }
 
     /**
@@ -112,6 +103,7 @@ abstract class FormRequest implements JsonSerializable
         $name = Str::before(class_basename(get_class($this)), 'Request');
 
         return [
+            'model' => $this->model,
             'message' => $this->isPostRequest
                             ? $name . ' Created Successfully!'
                             : $name . ' Updated Successfully!',

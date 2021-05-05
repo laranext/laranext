@@ -13,8 +13,7 @@ class MigrationCommand extends Command
      */
     protected $signature = 'laranext:migration
                             {name : Migration name}
-                            {package : Package name}
-                            {--dev}';
+                            {package : Package name}';
 
     /**
      * The console command description.
@@ -30,28 +29,15 @@ class MigrationCommand extends Command
      */
     public function handle()
     {
-        $this->makeDir('');
+        $this->makeDir('database/migrations');
 
         $this->call('make:migration', [
-            'name' => 'create_' . Str::snake($this->plural()).'_table',
-            '--create' => Str::snake($this->plural()),
+            'name' => 'create_' . Str::snake($this->argument('name')) . '_table',
+            '--create' => Str::snake($this->argument('name')),
             '--path' => $this->packagePath(),
         ]);
 
         $this->info('Migration generated successfully.');
-    }
-
-    /**
-     * Build the directory if not exists.
-     *
-     * @param  string  $path
-     * @return string
-     */
-    protected function makeDir($path)
-    {
-        if (! is_dir($directory = base_path($this->packagePath()))) {
-            mkdir($directory, 0755, true);
-        }
     }
 
     /**
@@ -61,10 +47,6 @@ class MigrationCommand extends Command
      */
     protected function packagePath($path = null)
     {
-        if ($this->option('dev')) {
-            return '../laranext/' . $this->argument('package') . '/database/migrations/';
-        }
-
         return 'packages/' . $this->argument('package') . '/database/migrations/';
     }
 }

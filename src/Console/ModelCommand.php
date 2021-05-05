@@ -14,7 +14,7 @@ class ModelCommand extends Command
     protected $signature = 'laranext:model
                             {name : Model name}
                             {package : Package name}
-                            {--dev}';
+                            {--namespace=}';
 
     /**
      * The console command description.
@@ -24,46 +24,39 @@ class ModelCommand extends Command
     protected $description = 'Create a new laranext package model';
 
     /**
-     * The base path.
-     *
-     * @var string
-     */
-    protected $basePath = 'src/';
-
-    /**
      * Execute the console command.
      *
      * @return void
      */
     public function handle()
     {
-        if ($this->alreadyExists($this->getPath('php'))) {
+        if ($this->alreadyExists($this->filePath())) {
             $this->error('Model already exists!');
 
             return false;
         }
 
+        $this->makeDir('src/Models');
+
         (new Filesystem)->copy(
             __DIR__.'/stubs/model.stub',
-            $this->getPath()
+            $this->filePath()
         );
 
-        $this->replace('{{ namespace }}', $this->namespace(), $this->getPath());
-        $this->replace('{{ name }}', $this->argument('name'), $this->getPath());
-        $this->replace('{{ kebab }}', $this->kebab(), $this->getPath());
-
-        $this->renameStub($this->getPath());
+        // replacements...
+        $this->replace('{{ name }}', $this->argument('name'), $this->filePath());
+        $this->replace('{{ namespace }}', $this->namespace(), $this->filePath());
 
         $this->info('Model generated successfully.');
     }
 
     /**
-     * Get the destination class path.
+     * Get the file destination path.
      *
      * @return string
      */
-    protected function getPath($ext = 'stub')
+    protected function filePath()
     {
-        return $this->packagePath($this->basePath) . $this->argument('name') . '.' . $ext;
+        return $this->packagePath('src\Models\\' . $this->argument('name') . '.php');
     }
 }

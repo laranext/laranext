@@ -1,0 +1,1 @@
+@intlify/vite-plugin-vue-i18n @vitejs/plugin-vue @vue/compiler-sfc autosize axios cooltipz-css debounce lodash pinia@next postcss sortablejs tailwindcss vite vue@next vue-flatpickr-component vue-i18n@next vue-router@next

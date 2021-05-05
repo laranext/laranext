@@ -3,18 +3,15 @@
 namespace Laranext;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Artisan;
 
 class Laranext
 {
-    use Concerns\Theme;
-
     /**
      * Get the current Laranext version.
      */
     public static function version()
     {
-        return '0.1.0';
+        return '0.3.0';
     }
 
     /**
@@ -23,12 +20,7 @@ class Laranext
     protected static $isRunningInConsole;
 
     /**
-     * Current Views Load Path.
-     */
-    public static $views = '';
-
-    /**
-     * Current Package Prefix.
+     * Current Prefix.
      */
     public static $prefix = '';
 
@@ -53,9 +45,9 @@ class Laranext
     }
 
     /**
-     * Determine if the application is running in the console.
+     * Register all laranext service providers.
      *
-     * @return bool
+     * @return void
      */
     public static function registerAllProviders()
     {
@@ -63,51 +55,10 @@ class Laranext
 
         app()->register(LaranextServiceProvider::class);
 
-        foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
-            if (is_string($provider)) {
-                app()->register($provider);
-            }
-            else {
-                app()->register($provider['provider']);
-            }
-        }
-    }
-
-    /**
-     * Set and get current key on runtime.
-     *
-     * @return string
-     */
-    public static function dummySeeder()
-    {
-        foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
-            $namespace = Str::of($provider['provider'] ?? $provider)->beforeLast('\\');
-            $seeder = $namespace . '\\Seeds\Dummy\DummySeeder';
-
-            if (class_exists($seeder)) {
-                (new $seeder)->run();
-            }
-
-            Artisan::call('cache:clear');
-        }
-    }
-
-    /**
-     * Set and get current key on runtime.
-     *
-     * @return string
-     */
-    public static function requireSeeder()
-    {
-        foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
-            $namespace = Str::of($provider['provider'] ?? $provider)->beforeLast('\\');
-            $seeder = $namespace . '\\Seeds\RequireSeeder';
-
-            if (class_exists($seeder)) {
-                (new $seeder)->run();
-            }
-
-            Artisan::call('cache:clear');
+        foreach (array_merge(config('laranext.prefix_providers'), config('laranext.providers')) as $key => $provider) {
+            is_string($provider)
+                ? app()->register($provider)
+                : app()->register($provider['provider']);
         }
     }
 
@@ -118,28 +69,11 @@ class Laranext
      */
     public static function runningInConsole($force = null)
     {
-        if ( static::$isRunningInConsole === null) {
+        if (static::$isRunningInConsole === null) {
             static::$isRunningInConsole = $force ?? (\PHP_SAPI === 'cli' || \PHP_SAPI === 'phpdbg');
         }
 
         return static::$isRunningInConsole;
-    }
-
-    /**
-     * Set and get current views on runtime.
-     *
-     * @return string
-     */
-    public static function views($views = null)
-    {
-        if ($views) {
-            static::$views = base_path('packages/' . $views . '/resources/views');
-        }
-
-        return [
-            __DIR__.'/../resources/views/',
-            static::theme()
-        ];
     }
 
     /**

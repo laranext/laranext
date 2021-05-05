@@ -18,7 +18,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install all of the Laranext resources';
+    protected $description = 'Install the laranext config.';
 
     /**
      * Execute the console command.
@@ -27,9 +27,11 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing Laranext Assets / Resources...');
+        $this->comment('Publishing Laranext Config...');
 
-        $this->callSilent('laranext:publish');
+        $this->callSilent('vendor:publish', [
+            '--tag' => 'laranext-config',
+        ]);
 
         $this->info('Laranext scaffolding installed successfully.');
     }

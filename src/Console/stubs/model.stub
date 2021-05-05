@@ -1,17 +1,17 @@
 <?php
 
-namespace {{ namespace }};
+namespace {{ namespace }}\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use {{ namespace }}\Filters\{{ name }}Filters;
+use Illuminate\Database\Eloquent\Model;
 
 class {{ name }} extends Model
 {
     /**
-     * Apply all relevant {{ kebab }} filters.
+     * Apply all relevant filters.
      *
-     * @param  Builder       $query
-     * @param  {{ namespace }}\{{ name }}Filters $filters
+     * @param  Illuminate\Database\Eloquent\Builder $query
+     * @param  {{ namespace }}\Filters\{{ name }}Filters $filters
      * @return Builder
      */
     public function scopeFilter($query, {{ name }}Filters $filters)

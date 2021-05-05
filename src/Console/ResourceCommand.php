@@ -15,8 +15,7 @@ class ResourceCommand extends Command
     protected $signature = 'laranext:resource
                             {name : Resource Name in Capital}
                             {package : Package base path and name}
-                            {--model=}
-                            {--dev}';
+                            {--model=}';
 
     /**
      * The console command description.
@@ -31,7 +30,6 @@ class ResourceCommand extends Command
      * @var array
      */
     protected $routes = [
-        'routes/web.php' => "Route::resource('{uri}', {controller}Controller::class)->except(['store', 'update', 'destroy']);" . PHP_EOL,
         'routes/api.php' => "Route::resource('{uri}', {controller}Controller::class);" . PHP_EOL,
     ];
 
@@ -42,67 +40,30 @@ class ResourceCommand extends Command
      */
     public function handle()
     {
-        $this->call('laranext:views', [
+        $this->call('laranext:controller', [
             'name' => $this->argument('name'),
             'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
+            '--model' => $this->option('model') ?? $this->argument('name'),
         ]);
 
-        $this->call('laranext:migration', [
-            'name' => $this->option('model') ?? $this->argument('name'),
-            'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
-        ]);
-
-        $this->call('laranext:model', [
-            'name' => $this->option('model') ?? $this->argument('name'),
-            'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
-        ]);
-
-        $this->call('laranext:fields', [
+        $this->call('laranext:filter', [
             'name' => $this->argument('name'),
             'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
         ]);
 
         $this->call('laranext:request', [
             'name' => $this->argument('name'),
             'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
         ]);
 
-        $this->call('laranext:actions', [
-            'name' => $this->argument('name'),
+        $this->call('laranext:model', [
+            'name' => $this->option('model') ?? $this->argument('name'),
             'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
         ]);
 
-        $this->call('laranext:filters', [
-            'name' => $this->argument('name'),
+        $this->call('laranext:migration', [
+            'name' => Str::snake($this->plural()),
             'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
-        ]);
-
-        $this->call('laranext:resourcecollection', [
-            'name' => $this->argument('name'),
-            'package' => $this->argument('package'),
-            '--dev' => $this->option('dev'),
-        ]);
-
-        $this->call('laranext:controller', [
-            'name' => $this->argument('name'),
-            'package' => $this->argument('package'),
-            '--model' => $this->option('model') ?? $this->argument('name'),
-            '--dev' => $this->option('dev'),
-        ]);
-
-        $this->call('laranext:controller', [
-            'name' => $this->argument('name'),
-            'package' => $this->argument('package'),
-            '--model' => $this->option('model') ?? $this->argument('name'),
-            '--dev' => $this->option('dev'),
-            '--api' => true,
         ]);
 
         $this->exportRoutes();
@@ -117,15 +78,14 @@ class ResourceCommand extends Command
      */
     protected function exportRoutes()
     {
-        foreach ($this->routes as $file => $route) {
-            $route = str_replace('{uri}', $this->kebabPlural(), $route);
-            $route = str_replace('{controller}', $this->plural(), $route);
+        $route = "Route::resource('{uri}', {controller}Controller::class);" . PHP_EOL;
+        $route = str_replace('{uri}', $this->kebabPlural(), $route);
+        $route = str_replace('{controller}', $this->plural(), $route);
 
-            file_put_contents(
-                $this->packagePath($file),
-                $route,
-                FILE_APPEND
-            );
-        }
+        file_put_contents(
+            $this->packagePath('routes/api.php'),
+            $route,
+            FILE_APPEND
+        );
     }
 }

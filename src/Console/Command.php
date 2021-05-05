@@ -41,7 +41,7 @@ abstract class Command extends ConsoleCommand
     {
         $path = $path ? '\\' . $path : $path;
 
-        return 'Laranext\\' . Str::studly($this->argument('package')) . $path;
+        return $this->option('namespace') ?? Str::studly($this->argument('package')) . $path;
     }
 
     /**
@@ -136,10 +136,6 @@ abstract class Command extends ConsoleCommand
      */
     protected function packagePath($path = null)
     {
-        if ($this->option('dev')) {
-            return base_path('../packages/laranext/' . $this->argument('package') . '/' . $path);
-        }
-
         return base_path('packages/' . $this->argument('package') . '/' . $path);
     }
 }

@@ -14,11 +14,7 @@ class FilterCommand extends Command
     protected $signature = 'laranext:filter
                             {name : Filter name}
                             {package : Package name}
-                            {--attribute=}
-                            {--checkbox}
-                            {--radio}
-                            {--date}
-                            {--dev}';
+                            {--namespace=}';
 
     /**
      * The console command description.
@@ -28,85 +24,39 @@ class FilterCommand extends Command
     protected $description = 'Create a new laranext package filter';
 
     /**
-     * The base path.
-     *
-     * @var string
-     */
-    protected $basePath = 'src/Filters/';
-
-    /**
      * Execute the console command.
      *
      * @return void
      */
     public function handle()
     {
-        if ($this->alreadyExists($this->getPath('php'))) {
+        if ($this->alreadyExists($this->filePath())) {
             $this->error('Filter already exists!');
 
             return false;
         }
 
-        $this->makeDir($this->basePath);
+        $this->makeDir('src/Filters');
 
         (new Filesystem)->copy(
             __DIR__.'/stubs/filter.stub',
-            $this->getPath()
+            $this->filePath()
         );
 
-        $this->replace('{{ namespace }}', $this->namespace(), $this->getPath());
-        $this->replace('{{ class }}', $this->argument('name'), $this->getPath());
-        $this->replace('{{ type }}', $this->getComponentName(), $this->getPath());
-        $this->replace('{{ attribute }}', $this->option('attribute'), $this->getPath());
-        $this->replace('{{ default }}', $this->getDefaultValue(), $this->getPath());
-
-        $this->renameStub($this->getPath());
+        // replacements...
+        $this->replace('{{ name }}', $this->argument('name'), $this->filePath());
+        $this->replace('{{ namespace }}', $this->namespace(), $this->filePath());
 
         $this->info('Filter generated successfully.');
     }
 
     /**
-     * Get the default value for filter type.
+     * Get the file destination path.
      *
      * @return string
      */
-    protected function getComponentName()
+    protected function filePath()
     {
-        if ($this->option('checkbox')) {
-            return 'checkbox';
-        }
-        elseif ($this->option('radio')) {
-            return 'radio';
-        }
-        elseif ($this->option('date')) {
-            return 'date';
-        }
-        else {
-            return 'select';
-        }
-    }
-
-    /**
-     * Get the default value for filter type.
-     *
-     * @return string
-     */
-    protected function getDefaultValue()
-    {
-        if ($this->option('checkbox') || $this->option('radio')) {
-            return '[]';
-        }
-
-        return "''";
-    }
-
-    /**
-     * Get the destination class path.
-     *
-     * @return string
-     */
-    protected function getPath($ext = 'stub')
-    {
-        return $this->packagePath($this->basePath) . $this->argument('name') . '.' . $ext;
+        return $this->packagePath('src\Filters\\' . $this->argument('name') . 'Filters.php');
     }
 }

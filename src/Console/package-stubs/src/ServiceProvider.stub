@@ -1,13 +1,23 @@
 <?php
 
-namespace {{ namespace }}\{{ class }};
+namespace {{ namespace }};
 
 use Laranext\Laranext;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class {{ class }}ServiceProvider extends ServiceProvider
+class {{ namespace }}ServiceProvider extends ServiceProvider
 {
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
     /**
      * Bootstrap any package services.
      *
@@ -19,17 +29,9 @@ class {{ class }}ServiceProvider extends ServiceProvider
             $this->registerMigrations();
         }
 
+        $this->registerRoutes();
         $this->registerResources();
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
+        $this->registerTranslations();
     }
 
     /**
@@ -43,17 +45,25 @@ class {{ class }}ServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the package transitions.
+     *
+     * @return void
+     */
+    protected function registerTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', '{{ name }}');
+    }
+
+    /**
      * Register the package resources such as routes, templates, etc.
      *
      * @return void
      */
     protected function registerResources()
     {
-        $this->registerRoutes();
-
         $this->app->config->set(['view.paths' => [
-            __DIR__.'/../resources/views/',
-            Laranext::theme()
+            __DIR__.'/../../laranext/resources/views/',
+            __DIR__.'/../resources/views',
         ]]);
     }
 
@@ -65,19 +75,19 @@ class {{ class }}ServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::group([
-            'namespace' => '{{ namespace }}\{{ class }}\Http\Controllers',
+            'namespace' => '{{ namespace }}\Http\Controllers\Api',
             'middleware' => ['web', 'auth'],
-            'prefix' => Laranext::prefix() . '/' . Laranext::key(),
+            'prefix' => Laranext::prefix() . '/api',
         ], function () {
-            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
         });
 
         Route::group([
-            'namespace' => '{{ namespace }}\{{ class }}\Http\Controllers\Api',
+            'namespace' => '{{ namespace }}\Http\Controllers',
             'middleware' => ['web', 'auth'],
-            'prefix' => 'laranext-api/' . Laranext::key(),
+            'prefix' => Laranext::prefix(),
         ], function () {
-            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
     }
 }

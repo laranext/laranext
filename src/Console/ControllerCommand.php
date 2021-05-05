@@ -2,7 +2,6 @@
 
 namespace Laranext\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
 
 class ControllerCommand extends Command
@@ -15,9 +14,9 @@ class ControllerCommand extends Command
     protected $signature = 'laranext:controller
                             {name : Controller name}
                             {package : Package name}
+                            {--namespace=}
                             {--model=}
-                            {--A|api}
-                            {--dev}';
+                            {--I|invokable}';
 
     /**
      * The console command description.
@@ -33,7 +32,7 @@ class ControllerCommand extends Command
      */
     public function handle()
     {
-        if ($this->alreadyExists($this->filePath('php'))) {
+        if ($this->alreadyExists($this->filePath())) {
             $this->error('Controller already exists!');
 
             return false;
@@ -42,31 +41,21 @@ class ControllerCommand extends Command
         $this->makeDir('src/Http/Controllers/Api');
 
         (new Filesystem)->copy(
-            $this->option('api') ? __DIR__.'/stubs/controller.api.stub' : __DIR__.'/stubs/controller.stub',
+            $this->option('invokable') ? __DIR__.'/stubs/controller.invokable.stub' : __DIR__.'/stubs/controller.stub',
             $this->filePath()
         );
 
-        $this->controller();
-
-        $this->renameStub($this->filePath());
-
-        $this->info('Controller generated successfully.');
-    }
-
-    /**
-     * Generate Controller.
-     *
-     * @return void
-     */
-    protected function controller()
-    {
+        // controller replacements...
         $this->replace('{{ name }}', $this->argument('name'), $this->filePath());
+        $this->replace('{{ lowercaseName }}', strtolower($this->argument('name')), $this->filePath());
         $this->replace('{{ namespace }}', $this->namespace(), $this->filePath());
         $this->replace('{{ plural }}', $this->plural(), $this->filePath());
-        $this->replace('{{ package }}', $this->argument('package'), $this->filePath());
-        $this->replace('{{ kebabPlural }}', $this->kebabPlural(), $this->filePath());
+        // $this->replace('{{ package }}', $this->argument('package'), $this->filePath());
+        // $this->replace('{{ kebabPlural }}', $this->kebabPlural(), $this->filePath());
         $this->replace('{{ modelClass }}', $this->getModel(), $this->filePath());
         $this->replace('{{ modelVariable }}', strtolower($this->getModel()), $this->filePath());
+
+        $this->info('Controller generated successfully.');
     }
 
     /**
@@ -84,12 +73,12 @@ class ControllerCommand extends Command
      *
      * @return string
      */
-    protected function filePath($ext = 'stub')
+    protected function filePath($ext = 'php')
     {
-        if ($this->option('api')) {
-            return $this->packagePath('src\Http\Controllers\Api\\' . $this->plural() . 'Controller.' . $ext);
+        if ($this->option('invokable')) {
+            return $this->packagePath('src\Http\Controllers\Api\\' . $this->argument('name') . '.' . $ext);
         }
 
-        return $this->packagePath('src/Http/Controllers/' . $this->plural() . 'Controller.' . $ext);
+        return $this->packagePath('src\Http\Controllers\Api\\' . $this->plural() . 'Controller.' . $ext);
     }
 }

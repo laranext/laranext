@@ -27,7 +27,7 @@ abstract class Filter implements JsonSerializable
      *
      * @var string
      */
-    public $component = 'select-filter';
+    public $component = 'filter-select';
 
     /**
      * The attribute / column name of the field.

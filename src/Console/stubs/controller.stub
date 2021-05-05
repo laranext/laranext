@@ -1,52 +1,113 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace {{ namespace }}\Http\Controllers\Api;
 
-use {{ namespace }}\{{ modelClass }};
-use App\Http\Controllers\Controller;
+use Laranext\Field;
+use Illuminate\Http\Request;
+use {{ namespace }}\Models\{{ modelClass }};
+use {{ namespace }}\Filters\{{ name }}Filters;
+use Laranext\Authorization\Http\Controllers\AuthorizeController;
 
-class {{ plural }}Controller extends Controller
+class {{ plural }}Controller extends AuthorizeController
 {
+    protected $name = '{{ lowercaseName }}';
+
+    protected $excludeResource = ['view', 'detail'];
+
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @param  \{{ namespace }}\Filters\{{ name }}Filters  $filters
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index({{ name }}Filters $filters)
     {
-        return view('{{ kebabPlural }}.index');
+        return {{ modelClass }}::filter($filters)->simplePaginate();
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
-     * @return View
+     * @param  \{{ namespace }}\Models\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
      */
     public function create({{ modelClass }} ${{ modelVariable }})
     {
-        return view('{{ kebabPlural }}.form', compact('{{ modelVariable }}'));
+        return $this->fields(${{ modelVariable }});
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespace }}\Models\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, {{ modelClass }} ${{ modelVariable }})
+    {
+        return new {{ name }}Request($request, ${{ modelVariable }});
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
-     * @return View
+     * @param  \{{ namespace }}\Models\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
      */
     public function show({{ modelClass }} ${{ modelVariable }})
     {
-        return view('{{ kebabPlural }}.detail', compact('{{ modelVariable }}'));
+        return ${{ modelVariable }};
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \{{ namespace }}\{{ modelClass }}  ${{ modelVariable }}
-     * @return View
+     * @param  \{{ namespace }}\Models\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
      */
     public function edit({{ modelClass }} ${{ modelVariable }})
     {
-        return view('{{ kebabPlural }}.form', compact('{{ modelVariable }}'));
+        return $this->fields(${{ modelVariable }});
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespace }}\Models\{{ modelClass }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, {{ modelClass }} ${{ modelVariable }})
+    {
+        return new {{ name }}Request($request, ${{ modelVariable }});
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        {{ modelClass }}::destroy($request->items);
+
+        return [
+            'message' => count($request->items) > 1
+                ? '{{ plural }} Deleted Successfully!'
+                : '{{ name }} Deleted Successfully!'
+        ];
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespace }}\Models\{{ modelClass }}  $model
+     * @return \Illuminate\Http\Response
+     */
+    public function fields($model)
+    {
+        return Field::make()
+                ->field('name', $model->name);
     }
 }

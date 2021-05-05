@@ -1,1 +1,0 @@
-@babel/plugin-syntax-dynamic-import @tailwindcss/custom-forms @vue/composition-api axios cross-env debounce laravel-mix laravel-mix-purgecss laravel-mix-tailwind pinia resolve-url-loader sass sass-loader tailwindcss vue vue-flatpickr-component vue-i18n vue-progressbar vue-template-compiler

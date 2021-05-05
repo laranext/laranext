@@ -14,7 +14,7 @@ class RequestCommand extends Command
     protected $signature = 'laranext:request
                             {name : Request name}
                             {package : Package name}
-                            {--dev}';
+                            {--namespace=}';
 
     /**
      * The console command description.
@@ -24,47 +24,39 @@ class RequestCommand extends Command
     protected $description = 'Create a new laranext package request';
 
     /**
-     * The base path.
-     *
-     * @var string
-     */
-    protected $basePath = 'src/Requests/';
-
-    /**
      * Execute the console command.
      *
      * @return void
      */
     public function handle()
     {
-        if ($this->alreadyExists($this->getPath('php'))) {
+        if ($this->alreadyExists($this->filePath())) {
             $this->error('Request already exists!');
 
             return false;
         }
 
-        $this->makeDir($this->basePath);
+        $this->makeDir('src/Requests');
 
         (new Filesystem)->copy(
             __DIR__.'/stubs/request.stub',
-            $this->getPath()
+            $this->filePath()
         );
 
-        $this->replace('{{ namespace }}', $this->namespace(), $this->getPath());
-        $this->replace('{{ class }}', $this->argument('name'), $this->getPath());
-
-        $this->renameStub($this->getPath());
+        // replacements...
+        $this->replace('{{ name }}', $this->argument('name'), $this->filePath());
+        $this->replace('{{ namespace }}', $this->namespace(), $this->filePath());
 
         $this->info('Request generated successfully.');
     }
 
     /**
-     * Get the destination class path.
+     * Get the file destination path.
      *
      * @return string
      */
-    protected function getPath($ext = 'stub')
+    protected function filePath()
     {
-        return $this->packagePath($this->basePath) . $this->argument('name') . 'Request.' . $ext;
+        return $this->packagePath('src\Requests\\' . $this->argument('name') . 'Request.php');
     }
 }

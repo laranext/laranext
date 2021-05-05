@@ -46,6 +46,7 @@ trait Validation
                 ? $this->rules()
                 : array_merge($this->rules(), $this->updateRules())
             , $this->messages()
+            , $this->customAttributes()
         );
     }
 }

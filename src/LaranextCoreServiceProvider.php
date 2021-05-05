@@ -2,13 +2,22 @@
 
 namespace Laranext;
 
-use Laranext\Laranext;
 use Illuminate\Support\ServiceProvider;
 use Laranext\Http\Middleware\ServePackage;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 
 class LaranextCoreServiceProvider extends ServiceProvider
 {
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
     /**
      * Bootstrap any package services.
      *
@@ -21,29 +30,10 @@ class LaranextCoreServiceProvider extends ServiceProvider
         }
 
         if (Laranext::runningInConsole()) {
-            $this->app->register(LaranextServiceProvider::class);
-
-            foreach (array_merge(config('laranext.site_providers'), config('laranext.providers')) as $key => $provider) {
-                if (is_string($provider)) {
-                    $this->app->register($provider);
-                }
-                else {
-                    $this->app->register($provider['provider']);
-                }
-            }
+            Laranext::registerAllProviders();
         }
 
         $this->app->make(HttpKernel::class)
                     ->pushMiddleware(ServePackage::class);
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

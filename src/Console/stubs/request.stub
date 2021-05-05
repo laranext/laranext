@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\Requests;
 
+use Illuminate\Support\Facades\DB;
 use Laranext\Requests\FormRequest;
 
-class {{ class }}Request extends FormRequest
+class {{ name }}Request extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,6 +14,34 @@ class {{ class }}Request extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+        ];
+    }
+
+    /**
+     * Get custom attributes.
+     *
+     * @return array
+     */
+    public function customAttributes()
+    {
+        return [
+            // 'cat_id' => 'category',
+        ];
+    }
+
+    /**
+     * Database Transaction.
+     *
+     * @return void
+     */
+    public function transaction()
+    {
+        DB::transaction(function () {
+            $this->model->forceFill($this->attributes);
+
+            $this->model->save();
+        });
     }
 }
