@@ -1,3 +1,3 @@
 <template>
-  <v-topbar :title="$t('Dashboard')"/>
+  Homepage
 </template>

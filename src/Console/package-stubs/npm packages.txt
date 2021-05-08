@@ -1,1 +1,1 @@
-@intlify/vite-plugin-vue-i18n @vitejs/plugin-vue @vue/compiler-sfc autosize axios cooltipz-css debounce lodash pinia@next postcss sortablejs tailwindcss vite vue@next vue-flatpickr-component vue-i18n@next vue-router@next
+@heroicons/vue @intlify/vite-plugin-vue-i18n @tailwindcss/aspect-ratio @tailwindcss/forms @vitejs/plugin-vue @vue/compiler-sfc axios lodash pinia@next postcss tailwindcss vite vue@next vue-i18n@next vue-router@next

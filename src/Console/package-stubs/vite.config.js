@@ -14,7 +14,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.join(__dirname, 'resources/js'),
-      Laranext: path.join(__dirname, '../laranext/resources/js'),
       Store: path.join(__dirname, 'resources/js/stores'),
       Use: path.join(__dirname, 'resources/js/uses'),
       Util: path.join(__dirname, 'resources/js/util'),
