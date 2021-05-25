@@ -62,7 +62,6 @@ class {{ namespace }}ServiceProvider extends ServiceProvider
     protected function registerResources()
     {
         $this->app->config->set(['view.paths' => [
-            __DIR__.'/../../laranext/resources/views/',
             __DIR__.'/../resources/views',
         ]]);
     }

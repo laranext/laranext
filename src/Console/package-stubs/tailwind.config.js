@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   mode: 'jit',
   purge: [
-    './resources/**/*.{js,jsx,ts,tsx,vue}',
+    './resources/**/*.{js,jsx,ts,tsx,vue,php}',
   ],
   theme: {
     extend: {
