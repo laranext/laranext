@@ -86,6 +86,11 @@ class NestedCategory
             'key' => $name,
             'slug' => Str::slug($name),
             'is_default' => false,
+            'color' => null,
+            'icon' => null,
+            'order' => 0,
+            'is_default' => false,
+            'meta' => null,
         ], is_array($item) ? $item : []);
     }
 
