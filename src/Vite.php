@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 class Vite
 {
-    protected ?bool $isDevelopmentServerRunning;
+    protected $isDevelopmentServerRunning;
 
     /**
      * Get the path to a versioned Vite file.
@@ -108,7 +108,11 @@ class Vite
     public function isDevelopmentServerRunning($port): bool
     {
         try {
-            return $this->isDevelopmentServerRunning ??= Http::withOptions([
+            if ($this->isDevelopmentServerRunning) {
+                return $this->isDevelopmentServerRunning;
+            }
+
+            return $this->isDevelopmentServerRunning = Http::withOptions([
                 'connect_timeout' => .1,
             ])->get( '//localhost:' . $port . '/@vite/client' )->successful();
         } catch (\Throwable $th) {
