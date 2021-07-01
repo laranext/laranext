@@ -95,7 +95,7 @@ class PackageCommand extends Command
     {
         $url = './packages/' . $this->argument('package');
         $composer = json_decode(file_get_contents(base_path('composer.json')), true);
-        $composer['repositories'] ??= [];
+        $composer['repositories'] ?? $composer['repositories'] = [];
 
         if (! collect($composer['repositories'])->firstWhere('url', $url)) {
             $composer['repositories'][] = [
